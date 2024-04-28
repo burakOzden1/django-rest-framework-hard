@@ -40,6 +40,9 @@ INSTALLED_APPS = [
 
     'profiller.apps.ProfillerConfig',
     'rest_framework',
+    'rest_framework.authtoken', # devaminda migrations islemlerimizi yapmaliyiz.
+    'rest_auth', # pip install django-rest-auth (CALISMADI!!!!!!!!!)
+    'dj_rest_auth', # alternatif
     'django_extensions',
 ]
 
@@ -129,3 +132,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = 'uploads'
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication', # Tokenlarla istek yapacagiz.
+        'rest_framework.authentication.SessionAuthentication', # Browsable api sayfamizda goruntuleme yapacagiz.
+    ]
+}
