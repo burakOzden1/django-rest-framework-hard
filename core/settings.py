@@ -43,6 +43,12 @@ INSTALLED_APPS = [
     'rest_framework.authtoken', # devaminda migrations islemlerimizi yapmaliyiz.
     'rest_auth', # pip install django-rest-auth (CALISMADI!!!!!!!!!)
     'dj_rest_auth', # alternatif
+    # registration end-pointlerimiz icin
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount', # social login icin gerekli, biz kullanmayacagiz.
+    'dj_rest_auth.registration',
+    'django.contrib.sites', # django ile gelen uygulama, bunu da kayit etmemiz gerekiyor.
     'django_extensions',
 ]
 
@@ -54,6 +60,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -140,3 +147,9 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication', # Browsable api sayfamizda goruntuleme yapacagiz.
     ]
 }
+
+# KAYIT ISLEMLERI ICIN GEREKLI
+SITE_ID = 1 # sitemize ID vermemiz gerekiyor.
+
+ACCOUNT_EMAIL_VERIFICATION = 'none' # kayit esnasinda email onayi istiyor muyuz?
+ACCOUNT_EMAIL_REQUIRED = (True, ) # kayit esnasinda kullanici email adresi vermeli mi?

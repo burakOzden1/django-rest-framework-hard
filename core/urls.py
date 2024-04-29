@@ -21,6 +21,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')), # Browsable api sayfasi icin - daha once yaptigimiz gibi
     path('api/dj-rest-auth/', include('dj_rest_auth.urls')), # django-rest-auth ile gelen endpointlerimiz icin
+    path('api/dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),
     path('api/', include('profiller.api.urls')),
 ]
 
