@@ -6,6 +6,7 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.viewsets import GenericViewSet
 from rest_framework import mixins
 from profiller.api.permissions import KendiProfiliYaDaReadOnly, DurumSahibiYaDaReadOnly
+from rest_framework.filters import SearchFilter
 
 
 class ProfilViewSet(
@@ -18,6 +19,8 @@ class ProfilViewSet(
     queryset = Profil.objects.all()
     serializer_class = ProfilSerializer
     permission_classes = [IsAuthenticated, KendiProfiliYaDaReadOnly]
+    filter_backends = [SearchFilter] # Liste yapisi, yani birden fazla secenek ekleyebiliriz
+    search_fields = ['sehir'] # Birden fazla alan ekleyebiliriz, profil modelimizden !!!!!
 
 
 # class ProfilViewSet(ReadOnlyModelViewSet):
@@ -28,9 +31,16 @@ class ProfilViewSet(
 
 
 class ProfilDurumViewSet(ModelViewSet):
-    queryset = ProfilDurum.objects.all()
+    
     serializer_class = ProfilDurumSerializer
     permission_classes = [IsAuthenticated, DurumSahibiYaDaReadOnly]
+
+    def get_queryset(self):
+        queryset = ProfilDurum.objects.all()
+        username = self.request.query_params.get('username', None)    
+        if username is not None:
+            queryset = queryset.filter(user_profil__user__username=username)
+        return queryset
 
     def perform_create(self, serializer):
         user_profil = self.request.user.profil

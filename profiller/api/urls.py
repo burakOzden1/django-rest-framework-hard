@@ -4,7 +4,7 @@ from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
 router.register(r'profiller', ProfilViewSet)
-router.register(r'durum', ProfilDurumViewSet)
+router.register(r'durum', ProfilDurumViewSet, basename='durum')
 
 urlpatterns = [
     path('', include(router.urls)),
