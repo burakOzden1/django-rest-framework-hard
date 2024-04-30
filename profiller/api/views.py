@@ -1,7 +1,7 @@
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from profiller.models import Profil, ProfilDurum
-from profiller.api.serializers import ProfilSerializer, ProfilDurumSerializer
+from profiller.api.serializers import ProfilSerializer, ProfilDurumSerializer, ProfilFotoSerializer
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.viewsets import GenericViewSet
 from rest_framework import mixins
@@ -35,3 +35,13 @@ class ProfilDurumViewSet(ModelViewSet):
     def perform_create(self, serializer):
         user_profil = self.request.user.profil
         serializer.save(user_profil=user_profil)
+
+
+class ProfilFotoUpdateView(generics.UpdateAPIView):
+
+    serializer_class = ProfilFotoSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        profil_nesnesi = self.request.user.profil
+        return profil_nesnesi
